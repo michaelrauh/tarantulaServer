@@ -1,0 +1,22 @@
+{
+  "name": "tarantula_server",
+  "version": "1.0.0",
+  "description": "server for tarantula application",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michaelrauh/tarantulaServer.git"
+  },
+  "author": "bijective",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/michaelrauh/tarantulaServer/issues"
+  },
+  "homepage": "https://github.com/michaelrauh/tarantulaServer#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
