@@ -1,8 +1,9 @@
 var express = require('express');
 var app = express();
 var port = process.env.PORT || 8080;
+module.exports = app
 
-app.get('/', function (req, res) {
+app.post('/', function (req, res) {
   res.send('Hello World!');
 });
 
