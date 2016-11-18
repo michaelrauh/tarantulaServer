@@ -1,20 +1,34 @@
 var request = require('supertest');
 var app = require('../app');
+var fs = require('fs-extra');
+var assert = require('assert');
+
+afterEach(function(done){
+  fs.removeSync('pictures');
+  done();
+});
 
 describe('POST to /', function() {
-  it ('responds with latitude and longitude to json', function (done){
+
+  it ('Responds with 200 when posting picture and writes photo to file at location', function (done){
     request(app)
     .post('/')
     .send({"picture":"\/9j\/4AAQSkZJRgABAQA", "latitude": 100.7, "longitude": 5.8})
     .expect(200)
-    .expect({"latitude": 100.7, "longitude": 5.8}, done);
+    .end(function(err, res) {
+      if (err) throw err;
+      var files = fs.walkSync('pictures')
+      assert.equal(files, 'pictures/5.8100.7')
+      done();
+    });
   });
+});
 
-  it ('returns a different location at different locations', function (done){
+describe('GET to /', function() {
+  it('returns a list of all files in the pictures directory', function (done){
+    fs.outputFileSync('pictures/foo.txt', "bar");
     request(app)
-    .post('/')
-    .send({"picture":"AAQSkZJRgABAQA", "latitude": 11, "longitude": 12.8})
-    .expect(200)
-    .expect({"latitude": 11, "longitude": 12.8}, done);
+    .get('/')
+    .expect('["pictures/foo.txt"]', done)
   });
 });
