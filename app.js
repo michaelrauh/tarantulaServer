@@ -11,7 +11,7 @@ app.post('/', jsonParser, function (req, res) {
   var pic = resp.picture
   delete resp.picture
   fs.mkdirpSync('pictures');
-  fs.writeFile("pictures/" + resp.longitude + ";" + resp.latitude, pic, function(err){
+  fs.writeFile("pictures/" + resp.latitude + ";" + resp.longitude, pic, function(err){
     if (err) return console.log(err)
   });
   res.sendStatus(200)
@@ -19,7 +19,18 @@ app.post('/', jsonParser, function (req, res) {
 
 app.get('/', function(req, res) {
   var files = fs.walkSync('pictures')
-  res.send(files)
+  var result = [];
+  files.forEach(function(filename) {
+    var latlong = filename.split('/')[1].split(';')
+    var lat = parseFloat(latlong[0])
+    var long = parseFloat(latlong[1])
+
+    result.push({
+        "latitude":  lat,
+        "longitude":  long
+      });
+});
+  res.send(result)
 });
 
 app.listen(port, function () {
