@@ -18,7 +18,7 @@ describe('POST to /', function() {
     .end(function(err, res) {
       if (err) throw err;
       var files = fs.walkSync('pictures')
-      assert.equal(files, 'pictures/5.8100.7')
+      assert.equal(files, 'pictures/5.8;100.7')
       done();
     });
   });

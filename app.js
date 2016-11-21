@@ -11,7 +11,7 @@ app.post('/', jsonParser, function (req, res) {
   var pic = resp.picture
   delete resp.picture
   fs.mkdirpSync('pictures');
-  fs.writeFile("pictures/" + resp.longitude + resp.latitude, pic, function(err){
+  fs.writeFile("pictures/" + resp.longitude + ";" + resp.latitude, pic, function(err){
     if (err) return console.log(err)
   });
   res.sendStatus(200)
