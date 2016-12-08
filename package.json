@@ -17,7 +17,8 @@
   },
   "homepage": "https://github.com/michaelrauh/tarantulaServer#readme",
   "dependencies": {
-    "express": "^4.14.0"
+    "express": "^4.14.0",
+    "fs-extra": "^1.0.0"
   },
   "devDependencies": {
     "body-parser": "^1.15.2",
