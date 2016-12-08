@@ -4,7 +4,7 @@ var fs = require('fs-extra');
 var assert = require('assert');
 
 afterEach(function(done){
-  fs.removeSync('pictures');
+  fs.removeSync('tmp');
   done();
 });
 
@@ -17,8 +17,8 @@ describe('POST to /', function() {
     .expect(200)
     .end(function(err, res) {
       if (err) throw err;
-      var files = fs.walkSync('pictures')
-      assert.equal(files, 'pictures/100.7;5.8')
+      var files = fs.walkSync('tmp/pictures')
+      assert.equal(files, 'tmp/pictures/100.7;5.8')
       done();
     });
   });
@@ -26,8 +26,8 @@ describe('POST to /', function() {
 
 describe('GET to /', function() {
   it('returns a list of all files in the pictures directory', function (done){
-    fs.outputFileSync('pictures/657.0001;678.002', "bar");
-    fs.outputFileSync('pictures/601.8701;999.9001', "baz");
+    fs.outputFileSync('tmp/pictures/657.0001;678.002', "bar");
+    fs.outputFileSync('tmp/pictures/601.8701;999.9001', "baz");
     request(app)
     .get('/')
     .expect([{"latitude": 601.8701, "longitude": 999.9001}, {"latitude": 657.0001, "longitude": 678.002}], done)
