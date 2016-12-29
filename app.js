@@ -11,7 +11,8 @@ app.post('/', jsonParser, function (req, res) {
   var pic = resp.picture
   delete resp.picture
   fs.mkdirpSync('tmp/pictures');
-  fs.writeFile("tmp/pictures/" + resp.latitude + ";" + resp.longitude, pic, function(err){
+  var filename = "tmp/pictures/" + resp.latitude + ";" + resp.longitude
+  fs.writeJson(filename, {image: pic}, function(err){
     if (err) return console.log(err)
   });
   res.sendStatus(200)
@@ -33,6 +34,10 @@ app.get('/', function(req, res) {
   res.send(result)
 });
 
+app.get('/photos/:id', function(req, res){
+  res.send(fs.readJsonSync('tmp/pictures/' + req.params.id))
+});
+
 app.listen(port, function () {
-  console.log('Example app listening on port 3000!');
+  console.log('Example app listening on port ' + port);
 });
